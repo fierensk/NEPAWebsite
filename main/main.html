@@ -32,38 +32,57 @@
             background: var(--dark);
         }
 
-        /* Animated Background Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--accent-light);
+            width: 3px;
+            height: 3px;
+            background: white;
             border-radius: 50%;
-            opacity: 0.5;
-            box-shadow: 0 0 10px var(--accent-light), 0 0 20px var(--blue);
-            animation: crystal-float 20s infinite, crystal-twinkle 3s infinite;
+            opacity: 0;
+            box-shadow: 0 0 4px white;
+            animation: star-twinkle 4s infinite;
         }
 
-        @keyframes crystal-float {
-            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
-            25% { transform: translateY(-100px) translateX(50px) rotate(90deg); }
-            50% { transform: translateY(-200px) translateX(-30px) rotate(180deg); }
-            75% { transform: translateY(-150px) translateX(80px) rotate(270deg); }
+        /* Animated Background Particles */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 0 0 8px white, 0 0 12px var(--accent-light);
+            animation: shooting 3s linear infinite;
         }
 
-        @keyframes crystal-twinkle {
-            0%, 100% { opacity: 0.3; box-shadow: 0 0 5px var(--accent-light); }
-            50% { opacity: 0.8; box-shadow: 0 0 20px var(--blue), 0 0 30px var(--accent); }
+        @keyframes star-twinkle {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 0.8; }
+            50% { opacity: 1; box-shadow: 0 0 8px white, 0 0 12px var(--accent-light); }
+        }
+
+        @keyframes shooting {
+            0% { 
+                opacity: 0;
+                transform: translateX(0) translateY(0);
+            }
+            5% {
+                opacity: 1;
+            }
+            100% { 
+                opacity: 0;
+                transform: translateX(-500px) translateY(500px);
+            }
         }
 
         /* Navigation */
@@ -278,7 +297,7 @@
             right: 0;
             width: 100%;
             height: 100%;
-            background: url('images/extras/gradient_main.webp');
+            background: url('../images/extras/gradient_main.webp');
             background-size: cover;
             background-position: center;
             opacity: 0.3;
@@ -326,7 +345,7 @@
         }
 
         .logo-credit a {
-            color: var(--accent-light);
+            color:  rgb(41, 93, 136);
             text-decoration: none;
             transition: all 0.3s;
         }
@@ -356,6 +375,18 @@
             font-family: 'Cinzel Decorative', 'Cinzel', serif;
         }
 
+        .section-title::before {
+        content: '✧';
+        position: absolute;
+        top: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--accent);
+        font-size: 2rem;
+        animation: crystal-pulse 2s infinite;
+        text-shadow: 0 0 20px var(--accent);
+        }
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -366,16 +397,6 @@
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--accent), var(--blue), var(--accent), transparent);
             box-shadow: 0 0 20px var(--accent), 0 0 30px var(--blue);
-        }
-
-        .section-title::before {
-            content: '❖';
-            position: absolute;
-            left: calc(50% - 140px);
-            color: var(--accent);
-            font-size: 2rem;
-            animation: crystal-pulse 2s infinite;
-            text-shadow: 0 0 20px var(--accent);
         }
 
         @keyframes crystal-pulse {
@@ -506,17 +527,6 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.3), inset 0 0 20px rgba(139, 90, 142, 0.1);
         }
 
-        .event-card::before {
-            content: '✦';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 2rem;
-            color: var(--accent);
-            opacity: 0.3;
-            animation: crystal-pulse 3s infinite;
-        }
-
         .event-card::after {
             content: '';
             position: absolute;
@@ -591,14 +601,14 @@
         }
 
         .staff-card {
-            background: linear-gradient(135deg, rgba(30, 58, 95, 0.6), rgba(139, 90, 142, 0.3));
-            backdrop-filter: blur(10px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            text-align: center;
-            transition: all 0.4s;
-            border: 2px solid transparent;
-        }
+        background: linear-gradient(135deg, rgba(30, 58, 95, 0.6), rgba(139, 90, 142, 0.3));
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 20px;
+        text-align: center;
+        transition: all 0.4s;
+        border: 2px solid transparent;
+        }   
 
         .staff-card:hover {
             border-color: var(--accent);
@@ -607,8 +617,7 @@
         }
 
         .staff-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            display: none;
         }
 
         .staff-title {
@@ -728,13 +737,6 @@
             font-family: 'Cinzel Decorative', 'Cinzel', serif;
         }
 
-        .cta-section h2::before,
-        .cta-section h2::after {
-            content: '❖';
-            margin: 0 30px;
-            color: var(--accent-light);
-            text-shadow: 0 0 30px var(--accent);
-        }
 
         .cta-section p {
             font-size: 1.5rem;
@@ -760,19 +762,6 @@
             position: relative;
         }
 
-        .cta-section a::before {
-            content: '✦';
-            position: absolute;
-            left: 15px;
-            color: var(--accent);
-        }
-
-        .cta-section a::after {
-            content: '✦';
-            position: absolute;
-            right: 15px;
-            color: var(--accent);
-        }
 
         .cta-section a:hover {
             transform: scale(1.1);
@@ -793,7 +782,7 @@
         }
 
         footer::before {
-            content: '◆ ◆ ◆';
+            content: '✦ ✦ ✦';
             position: absolute;
             top: -15px;
             left: 50%;
@@ -852,7 +841,7 @@
 
     <nav>
         <div class="nav-container">
-            <img src="images/branding/lil circle.png" alt="Alliance NEPA" class="logo">
+            <img src="../images/branding/lil circle.png" alt="Alliance NEPA" class="logo">
             <div class="menu-toggle" onclick="toggleMenu()">
                 <span></span><span></span><span></span>
             </div>
@@ -887,7 +876,7 @@
         <div class="hero-bg"></div>
         <div class="hero-image"></div>
         <div class="hero-content">
-            <img src="images/branding/transluscent asc line.png" alt="Alliance NEPA" class="hero-logo">
+            <img src="../images/branding/transluscent asc line.png" alt="Alliance NEPA" class="hero-logo">
             <p class="hero-tagline">Together We Rise</p>
             <p class="logo-credit"><a href="https://www.illustratedmenagerie.com/" target="_blank">Logo Art by Keenan Taylor</a></p>
         </div>
@@ -895,20 +884,20 @@
 
     <section class="carousel-section">
         <h2 class="section-title">Recent Adventures</h2>
-        <p class="section-subtitle">Moments from the lands of Kenaiken</p>
+        <p class="section-subtitle">Moments from the lands of Kennaiken</p>
         <div class="carousel-container">
             <div class="carousel-wrapper" id="carouselWrapper">
-                <div class="carousel-slide"><img src="images/carousel/image1.jpg" alt="Adventure 1"></div>
-                <div class="carousel-slide"><img src="images/carousel/image2.jpg" alt="Adventure 2"></div>
-                <div class="carousel-slide"><img src="images/carousel/image3.jpg" alt="Adventure 3"></div>
-                <div class="carousel-slide"><img src="images/carousel/image4.jpg" alt="Adventure 4"></div>
-                <div class="carousel-slide"><img src="images/carousel/image5.jpg" alt="Adventure 5"></div>
-                <div class="carousel-slide"><img src="images/carousel/image6.jpg" alt="Adventure 6"></div>
-                <div class="carousel-slide"><img src="images/carousel/image7.jpg" alt="Adventure 7"></div>
-                <div class="carousel-slide"><img src="images/carousel/image8.jpg" alt="Adventure 8"></div>
-                <div class="carousel-slide"><img src="images/carousel/image9.jpg" alt="Adventure 9"></div>
-                <div class="carousel-slide"><img src="images/carousel/image10.jpg" alt="Adventure 10"></div>
-                <div class="carousel-slide"><img src="images/carousel/image11.jpg" alt="Adventure 11"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image1.png" alt="Adventure 1"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image2.jpg" alt="Adventure 2"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image3.jpg" alt="Adventure 3"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image4.jpg" alt="Adventure 4"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image5.jpg" alt="Adventure 5"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image6.jpg" alt="Adventure 6"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image7.jpg" alt="Adventure 7"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image8.jpg" alt="Adventure 8"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image9.jpg" alt="Adventure 9"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image10.jpg" alt="Adventure 10"></div>
+                <div class="carousel-slide"><img src="../images/carousel/image11.jpg" alt="Adventure 11"></div>
             </div>
             <button class="carousel-btn prev" onclick="moveSlide(-1)">‹</button>
             <button class="carousel-btn next" onclick="moveSlide(1)">›</button>
@@ -942,42 +931,34 @@
         <h2 class="section-title">2025 Staff</h2>
         <div class="staff-grid">
             <div class="staff-card">
-                <div class="staff-icon">👑</div>
                 <div class="staff-title">Owner</div>
                 <div class="staff-name">Kyle Spriggle</div>
             </div>
             <div class="staff-card">
-                <div class="staff-icon">📖</div>
                 <div class="staff-title">Head of Plot</div>
                 <div class="staff-name">Angel Belford</div>
             </div>
             <div class="staff-card">
-                <div class="staff-icon">🛠️</div>
                 <div class="staff-title">Head of Logistics/Crafting</div>
                 <div class="staff-name">Jordan Krebs</div>
             </div>
             <div class="staff-card">
-                <div class="staff-icon">⚖️</div>
                 <div class="staff-title">Head of Rules</div>
                 <div class="staff-name">Alex Steslow / Kyle Gutshall</div>
             </div>
             <div class="staff-card">
-                <div class="staff-icon">🍽️</div>
                 <div class="staff-title">Head of Food</div>
                 <div class="staff-name">Alex Kelly-Kracht</div>
             </div>
             <div class="staff-card">
-                <div class="staff-icon">⭐</div>
                 <div class="staff-title">General Manager</div>
                 <div class="staff-name">Kate Fierens</div>
             </div>
             <div class="staff-card">
-                <div class="staff-icon">📝</div>
                 <div class="staff-title">Plot Adjunct</div>
                 <div class="staff-name">Dustin Crewell</div>
             </div>
             <div class="staff-card">
-                <div class="staff-icon">🥘</div>
                 <div class="staff-title">Food Adjunct</div>
                 <div class="staff-name">Melissa Matos</div>
             </div>
@@ -1013,16 +994,29 @@
     </footer>
 
     <script>
-        // Particles
-        const particlesEl = document.getElementById('particles');
-        for(let i = 0; i < 50; i++) {
+// Particles - Stars and Shooting Stars
+const particlesEl = document.getElementById('particles');
+        
+        // Create twinkling stars
+        for(let i = 0; i < 100; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
             p.style.left = Math.random() * 100 + '%';
             p.style.top = Math.random() * 100 + '%';
-            p.style.animationDelay = Math.random() * 20 + 's';
-            p.style.animationDuration = (15 + Math.random() * 10) + 's';
+            p.style.animationDelay = Math.random() * 4 + 's';
+            p.style.animationDuration = (3 + Math.random() * 3) + 's';
             particlesEl.appendChild(p);
+        }
+        
+        // Create occasional shooting stars
+        for(let i = 0; i < 5; i++) {
+            const s = document.createElement('div');
+            s.className = 'shooting-star';
+            s.style.left = (60 + Math.random() * 40) + '%';
+            s.style.top = Math.random() * 40 + '%';
+            s.style.animationDelay = (Math.random() * 10) + 's';
+            s.style.animationDuration = (2 + Math.random() * 2) + 's';
+            particlesEl.appendChild(s);
         }
 
         // Carousel
