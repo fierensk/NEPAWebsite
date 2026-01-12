@@ -1,0 +1,96 @@
+<!-- /main/site-rules.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site Rules | Alliance NEPA</title>
+
+  <!-- Reuse your existing site styling -->
+  <link rel="stylesheet" href="css/home_styles.css" />
+</head>
+
+<body>
+  <div class="particles" id="particles"></div>
+  <div id="header-placeholder"></div>
+  <!-- Same nav structure as your homepage -->
+
+
+  <!-- Page hero (same visual language as your hero) -->
+  <header class="page-hero">
+    <div class="page-hero-bg"></div>
+
+    <div class="page-hero-content">
+      <div class="page-hero-mark">
+        <!-- These are the images currently shown on the live page.
+             If you prefer local assets, download them and update the src paths. -->
+        <img
+          class="page-hero-logo"
+          src="images/rules/emr-removebg-preview.webp"
+          alt="EMR Event Park"
+          loading="lazy"
+        />
+      </div>
+
+      <h1 class="page-title">Site Rules</h1>
+      <p class="page-subtitle">Event site policies for EMR Event Park</p>
+    </div>
+
+    <div class="page-hero-imageWrap" aria-hidden="true">
+      <img
+        class="page-hero-image"
+        src="images/rules/emr_overhead.webp"
+        alt=""
+        loading="lazy"
+      />
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="content-section">
+    <section class="content-card">
+      <h2 class="content-title">Park Rules</h2>
+      <ul class="rules-list">
+        <li>Smoking in the parking area only</li>
+        <li>
+          No pets
+          <span class="rules-note">
+            (If there is an instance of a service animal please contact us beforehand at
+            <a href="mailto:nepagm@gmail.com">nepagm@gmail.com</a>)
+          </span>
+        </li>
+        <li>No underage drinking</li>
+        <li>No fireworks</li>
+        <li>
+          The campsite(s) and cabins must be left in the same condition as they were found:
+          <ol class="rules-sublist">
+            <li>Campsite must be cleaned of all trash before leaving.</li>
+            <li>Any campfire wood that is left must be stacked neatly beside the fire ring.</li>
+            <li>No glass, metal, or garbage must be left in the fire ring.</li>
+            <li>No destruction, defacing, or moving of EMR property.</li>
+          </ol>
+        </li>
+        <li>Fires must be totally contained in a fire ring</li>
+      </ul>
+    </section>
+
+    <section class="content-card content-card--emr">
+      <h2 class="content-title">EMR Event Park</h2>
+      <p class="content-text">
+        For additional venue details and policies, visit the EMR Event Park website.
+      </p>
+
+      <div class="content-actions">
+        <a class="event-btn" href="https://emreventpark.com" target="_blank" rel="noopener noreferrer">
+          EMR Website
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/home_main.js" defer></script>
+</body>
+</html>
