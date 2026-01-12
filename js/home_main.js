@@ -128,3 +128,47 @@ function initCarousel() {
 }
 
 initCarousel();
+
+// ===== FAQ accordion =====
+function initFaqAccordion() {
+  const root = document.querySelector('[data-faq]');
+  if (!root) return;
+
+  const items = Array.from(root.querySelectorAll('.faq-item'));
+
+  function closeAll(exceptId = null) {
+    items.forEach((item) => {
+      if (exceptId && item.id === exceptId) return;
+      item.classList.remove('is-open');
+      const btn = item.querySelector('.faq-q');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  items.forEach((item) => {
+    const btn = item.querySelector('.faq-q');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
+
+      item.classList.toggle('is-open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+
+  // If arriving with a hash, open that item
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target && target.classList.contains('faq-item')) {
+      const btn = target.querySelector('.faq-q');
+      closeAll(target.id);
+      target.classList.add('is-open');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+}
+
+// at the bottom of main.js, after your other init calls
+initFaqAccordion();
