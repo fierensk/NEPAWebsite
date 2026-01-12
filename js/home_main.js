@@ -172,3 +172,90 @@ function initFaqAccordion() {
 
 // at the bottom of main.js, after your other init calls
 initFaqAccordion();
+
+/* =========================
+   Header/Footer Loader
+   =========================
+   Adjust these paths based on where this page sits relative to header.html/footer.html.
+   Example:
+   - If this page is at /new-player/index.html and header.html is at site root: use "/header.html"
+   - If header.html is one level up: use "../header.html"
+*/
+const HEADER_PATH = "/header.html";
+const FOOTER_PATH = "/footer.html";
+
+async function loadPartial(placeholderId, url) {
+  const el = document.getElementById(placeholderId);
+  if (!el) return;
+
+  try {
+    const res = await fetch(url, { cache: "no-cache" });
+    if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
+    el.innerHTML = await res.text();
+  } catch (err) {
+    // Fail quietly but log for debugging
+    console.warn(err);
+  }
+}
+
+function initParticles() {
+  const particlesEl = document.getElementById("particles");
+  if (!particlesEl) return;
+
+  // Avoid duplicating if re-init
+  if (particlesEl.dataset.ready === "1") return;
+  particlesEl.dataset.ready = "1";
+
+  // Twinkling stars
+  for (let i = 0; i < 90; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "%";
+    p.style.top = Math.random() * 100 + "%";
+    p.style.animationDelay = Math.random() * 4 + "s";
+    p.style.animationDuration = (3 + Math.random() * 3) + "s";
+    particlesEl.appendChild(p);
+  }
+
+  // Shooting stars
+  for (let i = 0; i < 4; i++) {
+    const s = document.createElement("div");
+    s.className = "shooting-star";
+    s.style.left = (60 + Math.random() * 40) + "%";
+    s.style.top = Math.random() * 40 + "%";
+    s.style.animationDelay = Math.random() * 10 + "s";
+    s.style.animationDuration = (2 + Math.random() * 2) + "s";
+    particlesEl.appendChild(s);
+  }
+}
+
+function smoothAnchorScrolling() {
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const href = a.getAttribute("href");
+      if (!href || href === "#") return;
+
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // Update URL without jumping
+      history.pushState(null, "", href);
+    });
+  });
+}
+
+async function init() {
+  await Promise.all([
+    loadPartial("header-placeholder", HEADER_PATH),
+    loadPartial("footer-placeholder", FOOTER_PATH),
+  ]);
+
+  initParticles();
+  smoothAnchorScrolling();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+
