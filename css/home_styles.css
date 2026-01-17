@@ -2341,3 +2341,134 @@ nav {
   position: relative;
   z-index: auto; /* or just remove any z-index you set on these */
 }
+
+/* New Player: force intended hero colors regardless of lore overrides */
+.newplayer .page-hero-bg {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 58, 95, 0.95) 0%,
+    rgba(74, 93, 124, 0.9) 50%,
+    rgba(139, 90, 142, 0.85) 100%
+  );
+}
+
+.newplayer .page-hero-image {
+  opacity: 0.35; /* adjust to taste */
+}
+
+.newplayer .page-title {
+  text-shadow:
+    0 0 20px var(--accent),
+    0 0 40px var(--blue),
+    2px 2px 6px rgba(0,0,0,0.8);
+}
+
+/* New Player page: remove diagonal hero cut */
+.newplayer .page-hero-bg {
+  clip-path: none;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.footer-socials a {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+
+  color: white;
+  font-size: 1.25rem;
+
+  background: linear-gradient(
+    135deg,
+    rgba(70, 130, 180, 0.25),
+    rgba(139, 90, 142, 0.35)
+  );
+
+  border: 2px solid rgba(139, 90, 142, 0.6);
+  box-shadow:
+    0 8px 22px rgba(0,0,0,0.45),
+    inset 0 0 14px rgba(139, 90, 142, 0.25);
+
+  clip-path: polygon(
+    8% 0%,
+    92% 0%,
+    100% 50%,
+    92% 100%,
+    8% 100%,
+    0% 50%
+  );
+
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.footer-socials a:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 35px rgba(139, 90, 142, 0.75),
+    0 0 30px rgba(70, 130, 180, 0.6);
+}
+
+/* ===== Footer floating text buttons ===== */
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.75rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-btn {
+  display: inline-block;
+  padding: 0.9rem 1.6rem;
+
+  color: white;
+  text-decoration: none;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  border: 2px solid var(--accent);
+
+  clip-path: polygon(8% 0%, 92% 0%, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.45),
+    0 0 22px rgba(139, 90, 142, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+
+  transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+
+.footer-btn:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 38px rgba(139, 90, 142, 0.75),
+    0 0 34px rgba(70, 130, 180, 0.55);
+}
+
+/* Optional: vary one button color a bit for readability */
+.footer-btn:nth-child(2) {
+  background: linear-gradient(135deg, var(--blue), var(--accent));
+  border-color: var(--blue);
+}
+
+.footer-btn:nth-child(3) {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-color: rgba(139, 90, 142, 0.8);
+}
