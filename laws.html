@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bastion Code of Laws | Alliance NEPA</title>
+
+  <!-- Main site styles -->
+  <link rel="stylesheet" href="/css/home_styles.css" />
+
+  <!-- Shared partial loader -->
+  <script src="/js/common.js"></script>
+
+  <!-- Page-specific styles: "paper posting" look -->
+  <style>
+    /* Keep the site vibe, but let the "poster" be the focus */
+    .law-page {
+      position: relative;
+      z-index: 2;
+      padding-top: 110px; /* clears fixed nav */
+      padding-bottom: 6rem;
+    }
+
+    /* A slightly vignetted backdrop so parchment reads well */
+    .law-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(1200px 600px at 50% 10%, rgba(70,130,180,0.18), transparent 60%),
+        radial-gradient(900px 500px at 20% 85%, rgba(139,90,142,0.16), transparent 65%),
+        linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.75) 100%);
+      pointer-events: none;
+    }
+
+    /* Center the certificate */
+    .law-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Parchment */
+    .parchment {
+      position: relative;
+      color: #1b1b1b;
+      padding: 3.25rem 3rem 2.75rem;
+      margin-top: 2.25rem;
+
+      /* Faux paper texture (no image dependency) */
+      background:
+        radial-gradient(1200px 700px at 50% 20%, rgba(255,255,255,0.55), rgba(255,255,255,0.0) 65%),
+        radial-gradient(900px 600px at 20% 70%, rgba(120, 90, 40, 0.10), transparent 55%),
+        radial-gradient(900px 600px at 80% 80%, rgba(80, 50, 25, 0.10), transparent 55%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(60,40,20,0.03) 0px,
+          rgba(60,40,20,0.03) 2px,
+          rgba(255,255,255,0.00) 6px,
+          rgba(255,255,255,0.00) 10px
+        ),
+        linear-gradient(180deg, #f3e6c9 0%, #ead7b0 50%, #e4cf9f 100%);
+
+      box-shadow:
+        0 18px 60px rgba(0,0,0,0.55),
+        inset 0 0 0 2px rgba(70,130,180,0.18),
+        inset 0 0 0 6px rgba(139,90,142,0.12);
+
+      border: 3px double rgba(55, 35, 18, 0.55);
+      border-radius: 6px;
+
+      /* Slight “deckle edge” illusion */
+      clip-path: polygon(
+        0.5% 1.0%,
+        99.2% 0.6%,
+        99.5% 98.9%,
+        0.8% 99.4%
+      );
+    }
+
+    /* Ornamental border inside the parchment */
+    .parchment::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 2px solid rgba(55, 35, 18, 0.35);
+      pointer-events: none;
+    }
+
+    /* Header block: like a posted notice */
+    .law-head {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .law-kicker {
+      display: inline-block;
+      font-family: 'Cinzel', 'Times New Roman', serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: rgba(40, 25, 10, 0.85);
+      border-bottom: 1px solid rgba(55, 35, 18, 0.35);
+      padding-bottom: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .law-title {
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      font-size: clamp(2.1rem, 4.2vw, 3.0rem);
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      margin-bottom: 0.6rem;
+      color: rgba(28, 18, 8, 0.95);
+    }
+
+    .law-subtitle {
+      max-width: 80ch;
+      margin: 0 auto;
+      font-style: italic;
+      color: rgba(40, 25, 10, 0.80);
+      line-height: 1.8;
+    }
+
+
+
+    /* Body typography */
+    .law-body {
+      font-family: 'Cinzel', 'Times New Roman', serif;
+      line-height: 1.95;
+      font-size: 1.03rem;
+      color: rgba(26, 16, 6, 0.95);
+    }
+
+    .law-body h2 {
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      font-size: 1.65rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 2.1rem 0 0.75rem;
+      color: rgba(28, 18, 8, 0.95);
+      border-bottom: 1px solid rgba(55, 35, 18, 0.35);
+      padding-bottom: 0.35rem;
+    }
+
+    .law-body h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 1.4rem 0 0.35rem;
+      color: rgba(32, 20, 9, 0.92);
+    }
+
+    .law-body p {
+      margin-top: 0.8rem;
+    }
+
+    .law-body ol,
+    .law-body ul {
+      margin: 0.75rem 0 0.5rem 1.35rem;
+      padding: 0;
+    }
+
+    .law-body li {
+      margin: 0.35rem 0;
+    }
+
+    .law-body a {
+      color: rgba(50, 70, 120, 0.95);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(50, 70, 120, 0.25);
+    }
+    .law-body a:hover {
+      color: rgba(28, 52, 110, 1);
+      border-bottom-color: rgba(28, 52, 110, 0.55);
+    }
+
+    /* Footer of parchment: signatures / posting mark */
+    .law-signoff {
+      margin-top: 2.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(55, 35, 18, 0.35);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
+      align-items: end;
+    }
+
+    .law-sigblock .sig-title {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.9rem;
+      color: rgba(40, 25, 10, 0.80);
+      margin-bottom: 0.35rem;
+    }
+
+    .law-sigblock .sig-line {
+      height: 1px;
+      background: rgba(55, 35, 18, 0.45);
+      margin: 1.1rem 0 0.35rem;
+    }
+
+    .law-sigblock .sig-name {
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      letter-spacing: 2px;
+      font-size: 1.05rem;
+      color: rgba(28, 18, 8, 0.95);
+    }
+
+    .law-posted {
+      text-align: right;
+      font-style: italic;
+      color: rgba(40, 25, 10, 0.75);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    /* Print-friendly */
+    @media print {
+      body { background: white; }
+      .particles, nav, #header-placeholder, #footer-placeholder { display: none !important; }
+      .law-page { padding-top: 0; }
+      .law-backdrop { display: none; }
+      .parchment { box-shadow: none; }
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .law-shell { padding: 0 1rem; }
+      .parchment { padding: 2.4rem 1.5rem 2rem; }
+      .wax-seal { right: 16px; top: 16px; width: 72px; height: 72px; }
+      .law-signoff { grid-template-columns: 1fr; text-align: left; }
+      .law-posted { text-align: left; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Stars layer (optional; matches your site) -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- Shared header -->
+  <div id="header-placeholder"></div>
+
+  <main class="law-page">
+    <div class="law-backdrop" aria-hidden="true"></div>
+
+    <div class="law-shell">
+      <article class="parchment" aria-label="Bastion Code of Laws">
+        <span></span>
+
+        <header class="law-head">
+          <div class="law-kicker">Posted by order of the Council of Five</div>
+          <h1 class="law-title">Bastion Code of Laws</h1>
+          <p class="law-subtitle">
+            A public posting for the benefit of the Settlement of Bastion. Let it be known:
+            where these laws no longer serve the people, they shall be amended or discarded.
+          </p>
+        </header>
+
+        <section class="law-body">
+          <p>
+            This Code of Laws, prepared by the Councilors of Law and Code, is set forth for the benefit of the settlement of Bastion.
+            At such a time as these laws no longer serve the people, they shall be amended or discarded.
+          </p>
+
+          <p>
+            Citizenship of the settlement named Bastion is automatically conferred to all who have emerged from the underground settlement from which we have come.
+            For those born in Bastion, citizenship is automatically granted with the rights, privileges, and obligations it entails.
+            Others who wish to become citizens must abide by the Laws and Code as set forward herein.
+          </p>
+
+          <h2>Rights of Citizens</h2>
+          <p>
+            As citizens in a free society, there are tenets and rights that must be upheld for the good of peace, stability, and order.
+          </p>
+
+          <h3>Autonomy</h3>
+          <p>
+            All citizens of Bastion have agency as well as bodily and mental autonomy. To this end, mental abilities as well as commanding magics
+            or concoctions that impose upon or curtail the will of another citizen are forbidden save for in dire circumstances.
+          </p>
+          <p>
+            As a part of the autonomy of citizens, they are free to travel within the boundaries of the settlement and beyond.
+          </p>
+
+          <h3>Privacy</h3>
+          <p>
+            All citizens have a right to privacy. From burrows to tents to barracks, where privacy can be afforded it will be granted and respected.
+          </p>
+
+          <h3>Security</h3>
+          <p>
+            All citizens shall feel secure in their personal property and goods. This includes but is not limited to their weapons, armor, food, potions,
+            elixirs, scrolls, spellbooks, and other items of personal interest.
+          </p>
+
+          <h3>Welfare</h3>
+          <p>
+            All citizens have a right to the health, safety, and welfare of their body and mind. For this, medical services are given freely as resources are available.
+          </p>
+
+          <h2>Responsibilities of Citizens</h2>
+          <p>
+            Bastion is a settlement built on cooperation and communal resources. We rise together, and for this, those who are able are expected to contribute what they can
+            to the survival, security, and well-being of the community.
+          </p>
+
+          <h3>Contribution</h3>
+          <p>
+            We lift together as we have risen together. If you have a skill or resource that will benefit the settlement, it is fair to be discerning in how limited resources are applied.
+            It serves none to hoard resources, however.
+          </p>
+
+          <h3>Discretion</h3>
+          <p>
+            There is and will be information that is a matter of the safety of the citizenry. Discretion is necessary, in our dealings with outside merchants and potential combatants.
+            When you are away from the settlement, do not assume that every person you meet will be friendly toward our people.
+          </p>
+
+          <h3>Solidarity</h3>
+          <p>
+            We are stronger together. This includes all beings of sentient races. Though some bonds may be traditionally closer, we are stronger in numbers.
+          </p>
+
+          <h3>Testimony</h3>
+          <p>
+            When a wrong is made by another citizen or by the council, citizens are expected to give testimony. There is no merit in small enclaves holding their opinions without making their voices heard
+            to the people of the settlement at large.
+          </p>
+
+          <h2>Definition of Crimes</h2>
+
+          <h3>Grave Crimes</h3>
+          <ol>
+            <li>Murder - Willfully killing another citizen or withholding necessary aid when it may be given without great sacrifice.</li>
+            <li>Treason - Willfully undermining the success and survival of Bastion or providing information to enemy combatants.</li>
+            <li>Necromancy - Use of necromancy has been said to harm the land, and its use is expressly forbidden.</li>
+            <li>Cannibalism - Consuming the flesh of another sentient race is unsanitary, uncivilized, and is a horrific and condemned practice.</li>
+          </ol>
+
+          <h3>Serious Crimes</h3>
+          <ol>
+            <li>Assault - Martial or magical assault upon another citizen.</li>
+            <li>Violation of Will - The illicit use of concoctions, magic, or mental abilities of the Librahm and Sonorant to subsume or violate the will of another citizen.</li>
+            <li>Grand Theft - Theft of significant resources, such as items imbued with magic, large quantities of goods, ritual scrolls and components, and large sums of coin.</li>
+            <li>Serious Property Damage - Destruction of domiciles, carts, land, and other property of commensurate value.</li>
+          </ol>
+
+          <h3>Petty Crimes</h3>
+          <ol>
+            <li>Petty Theft - Theft of minor resources, to include small quantities of coin, food, or equipment.</li>
+            <li>Vandalism - Willful destruction or defacement of public or private property without major damage.</li>
+          </ol>
+
+          <h2>Due Process and Remuneration</h2>
+          <p>
+            If a citizen is accused of a crime, the matter should be brought before the elected Council of five. In cases where it is possible, attempts at reform and remuneration will be made.
+          </p>
+          <p>
+            For all cases, the Council will meet to hear the plaintiff and defendant in the case. In any case where the First Appointed for any position may have a conflict of interest, their Second will stand in their place.
+            If both parties have a conflict of interest due to closeness with one of the parties in the case, other Council members may appoint a party from the citizenry. This third party is free to accept or reject the summons
+            to the Council for the hearing.
+          </p>
+          <p>
+            For Grave crimes, a preponderance of evidence must be levied. In cases where the penalty is death or banishment from the settlement, the decision of the Council of Five must be unanimous.
+          </p>
+          <p>
+            For Serious crimes, at least three fifths of the Council or their appointees must be in agreement. Depending on the nature of the crime and its circumstances, these crimes are unlikely to, but may, include penalties of banishment or death.
+            Stolen property shall be returned to its original owner, and a fine may be levied proportional to the means of the perpetrator. In cases of violation of will or assault, the perpetrator will be expected to provide service to the aggrieved
+            or to healers and the community.
+          </p>
+          <p>
+            For Petty crimes, at least three fifths of the Council or their appointees must be in agreement. Stolen property shall be returned in kind. Community service will be levied as remedy for vandalism.
+          </p>
+          <p>
+            Fines are to be paid in coin, script, or goods, based on the economic status of the perpetrator. Death, in cases that require it, shall be carried out by the Councilor of Law and Code or their second.
+            Prior to that, a Writ of Execution must be read to the one awaiting death.
+          </p>
+
+          <div class="law-signoff" aria-label="Signoff">
+            <div class="law-sigblock">
+              <div class="sig-title">Witnessed & posted under seal</div>
+              <div class="sig-line"></div>
+              <div class="sig-name">Councilor of Law and Code</div>
+            </div>
+
+            <div class="law-posted">
+              Posted within the bounds of Bastion<br />
+              For public notice and remembrance
+            </div>
+          </div>
+
+          <p style="margin-top:1.5rem; font-size:0.92rem; color: rgba(40,25,10,0.75);">
+            
+          </p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <!-- Shared footer -->
+  <div id="footer-placeholder"></div>
+
+  <script src="/js/common.js"></script>
+</body>
+</html>
