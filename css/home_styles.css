@@ -2474,3 +2474,19 @@ nav {
   background: linear-gradient(135deg, var(--primary), var(--accent));
   border-color: rgba(139, 90, 142, 0.8);
 }
+
+/* Ensure particles render above dark section backgrounds */
+.particles {
+  z-index: 1;              /* was 0 */
+}
+
+/* Ensure main page content renders above particles */
+.page {
+  position: relative;
+  z-index: 2;
+}
+
+/* Keep nav and dropdowns safely above everything */
+nav {
+  z-index: 1000;
+}
