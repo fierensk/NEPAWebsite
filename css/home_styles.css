@@ -820,6 +820,7 @@ footer a:hover {
     opacity: 1;
     visibility: visible;
     transform: none;
+    pointer-events: auto;
   }
 
   .hero-logo { max-width: 250px; }
@@ -2474,11 +2475,25 @@ nav {
   background: linear-gradient(135deg, var(--primary), var(--accent));
   border-color: rgba(139, 90, 142, 0.8);
 }
-
-/* Ensure particles render above dark section backgrounds */
 .particles {
-  z-index: 1;              /* was 0 */
+  position: fixed;
+  inset: 0;
+  z-index: 1;          /* stars above background layers */
+  pointer-events: none;
 }
+
+/* Protect interactive/foreground UI from particle overlay */
+.carousel-container,
+.event-card,
+.event-btn,
+.staff-card,
+.staff-contact-btn,
+.cta-btn,
+.footer-btn {
+  position: relative;
+  z-index: 2;
+}
+
 
 /* Ensure main page content renders above particles */
 .page {
