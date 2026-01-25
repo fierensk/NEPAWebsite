@@ -2532,3 +2532,20 @@ nav {
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
   margin-bottom: 1.5rem;
 }
+
+.page-hero-content {
+  text-align: center;
+}
+
+.page-lede {
+  margin: 0 auto 2rem auto;
+  max-width: 800px;   /* prevents overly wide text */
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 1.5rem;
+  margin-top: 2rem;
+}
