@@ -897,8 +897,9 @@ footer a:hover {
 
 .page-hero-image {
   width: 100%;
-  max-height: 520px;
-  object-fit: cover;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
   border: 5px solid var(--accent);
   box-shadow: 0 0 40px rgba(139, 90, 142, 0.45), inset 0 0 30px rgba(0,0,0,0.4);
 }
@@ -2504,4 +2505,30 @@ nav {
 /* Keep nav and dropdowns safely above everything */
 nav {
   z-index: 1000;
+}
+
+/* Site Rules hero image: show full image (no crop) */
+.page-hero-imageWrap {
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.page-hero-image {
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block;
+}
+
+.content-card-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+  border: 2px solid var(--accent);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  margin-bottom: 1.5rem;
 }
