@@ -1,3 +1,308 @@
-<p> NOOO GO AWAYYY ITS NOT DONE
-    <br><img src = "/images/store/cry.webp">
-</p>
+<!-- /main/site.html  (Static “storefront” that submits Donate-style payments to PayPal) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Store | Alliance NEPA</title>
+
+  <!-- Your main site stylesheet -->
+  <link rel="stylesheet" href="/css/home_styles.css" />
+
+  <!-- Shared partial loader (header/footer placeholders) -->
+  <script src="/js/common.js" defer></script>
+  <script src="/js/home_main.js" defer></script>
+
+  <style>
+    /* Page-specific layout polish (keeps your existing aesthetic) */
+    .store-page { position: relative; z-index: 2; }
+
+    .store-hero {
+      position: relative;
+      padding-top: 110px; /* clears fixed nav */
+      padding-bottom: 2.25rem;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .store-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(30, 58, 95, 0.95) 0%,
+        rgba(74, 93, 124, 0.90) 45%,
+        rgba(139, 90, 142, 0.85) 100%
+      );
+      clip-path: polygon(0 0, 100% 0, 100% 78%, 0 100%);
+      z-index: 0;
+    }
+
+    .store-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .store-title {
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      font-size: clamp(2.1rem, 5vw, 3.4rem);
+      text-transform: uppercase;
+      letter-spacing: 8px;
+      text-shadow: 0 0 20px var(--accent), 0 0 40px var(--blue), 2px 2px 6px rgba(0,0,0,0.8);
+      margin-bottom: 0.75rem;
+    }
+
+    .store-lede {
+      color: rgba(255,255,255,0.92);
+      max-width: 85ch;
+      margin: 0.75rem auto 0;
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+
+    .store-shell {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3.25rem 2rem 6rem;
+      display: grid;
+      gap: 2rem;
+    }
+
+    .store-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(10px);
+      border: 3px double var(--accent);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.35), inset 0 0 25px rgba(139, 90, 142, 0.12);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .store-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255,255,255,0.08);
+      pointer-events: none;
+    }
+
+    /* Resized product boxes: narrower max width + more compact padding */
+    .store-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+
+    .product {
+      background: rgba(0,0,0,0.18);
+      border: 2px solid rgba(139, 90, 142, 0.45);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25), inset 0 0 18px rgba(139, 90, 142, 0.10);
+      padding: 1.25rem;
+      position: relative;
+      min-height: 0;
+    }
+
+    .product-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .product-title {
+      color: white;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 1.02rem;
+      text-shadow: 0 0 14px rgba(139, 90, 142, 0.35);
+    }
+
+    .product-price {
+      color: var(--accent-light);
+      font-weight: 900;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .product-desc {
+      color: rgba(255,255,255,0.88);
+      line-height: 1.75;
+      font-size: 0.96rem;
+      margin-bottom: 0.95rem;
+    }
+
+    .product-form {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    /* Button: slightly tighter to match smaller boxes */
+    .pay-btn {
+      display: inline-block;
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--blue));
+      color: white;
+      padding: 1.0rem 1.2rem;
+      border-radius: 0;
+      text-decoration: none;
+      font-weight: 900;
+      transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
+      text-transform: uppercase;
+      box-shadow: 0 8px 30px rgba(139, 90, 142, 0.55);
+      clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+      border: 2px solid var(--accent);
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    .pay-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(139, 90, 142, 0.8), 0 0 28px rgba(70, 130, 180, 0.45);
+      filter: brightness(1.05);
+    }
+
+    .pay-btn.alt {
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      border-color: var(--blue);
+    }
+
+    .pay-btn.dark {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-color: rgba(139, 90, 142, 0.8);
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .store-grid { grid-template-columns: 1fr; }
+      .store-card { padding: 1.5rem; }
+      .product { padding: 1.15rem; }
+    }
+  </style>
+</head>
+
+<body class="store-page">
+  <!-- Background particles -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- Shared header -->
+  <div id="header-placeholder"></div>
+
+  <!-- Hero -->
+  <header class="store-hero" aria-label="Store">
+    <div class="store-hero-bg"></div>
+    <div class="store-hero-content">
+      <h1 class="store-title">Store</h1>
+      <p class="store-lede">
+        All items below use PayPal’s donation-style checkout. If you are unable to use PayPal, please contact <a href="mailto:NEPAGM@gmail.com">NEPAGM@gmail.com</a> for other options.
+      </p>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="store-shell">
+    <section class="store-card" aria-label="Storefront options">
+      <div class="store-grid">
+        <!-- ===== Registration $80 ===== -->
+        <article class="product">
+          <div class="product-header">
+            <div class="product-title">Registration</div>
+            <div class="product-price">$80</div>
+          </div>
+          <p class="product-desc">
+            Standard event registration.
+          </p>
+
+          <form class="product-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_donations">
+            <input type="hidden" name="business" value="nepagm@gmail.com">
+            <input type="hidden" name="item_name" value="Alliance NEPA Registration">
+            <input type="hidden" name="amount" value="80.00">
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="no_shipping" value="1">
+            <input type="hidden" name="no_note" value="0">
+            <button class="pay-btn" type="submit">Pay</button>
+          </form>
+        </article>
+
+        <!-- ===== Buyout Registration $110 ===== -->
+        <article class="product">
+          <div class="product-header">
+            <div class="product-title">Buyout Registration</div>
+            <div class="product-price">$110</div>
+          </div>
+          <p class="product-desc">
+            Registration plus NPC buyout. 5 slots per event.
+          </p>
+
+          <form class="product-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_donations">
+            <input type="hidden" name="business" value="nepagm@gmail.com">
+            <input type="hidden" name="item_name" value="Alliance NEPA Buyout Registration">
+            <input type="hidden" name="amount" value="110.00">
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="no_shipping" value="1">
+            <input type="hidden" name="no_note" value="0">
+            <button class="pay-btn alt" type="submit">Pay</button>
+          </form>
+        </article>
+
+        <!-- ===== Mug $15 (no shipping collected) ===== -->
+        <article class="product">
+          <div class="product-header">
+            <div class="product-title">Alliance NEPA Mug</div>
+            <div class="product-price">$15</div>
+          </div>
+          <p class="product-desc">
+            Please include pickup details (or an address) in the PayPal note.
+          </p>
+
+          <form class="product-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_donations">
+            <input type="hidden" name="business" value="nepagm@gmail.com">
+            <input type="hidden" name="item_name" value="Alliance NEPA Mug (Pickup/No Shipping)">
+            <input type="hidden" name="amount" value="15.00">
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="no_shipping" value="1">
+            <input type="hidden" name="no_note" value="0">
+            <button class="pay-btn dark" type="submit">Pay</button>
+          </form>
+        </article>
+
+        <!-- ===== Custom Donation (amount entered on PayPal) ===== -->
+        <article class="product">
+          <div class="product-header">
+            <div class="product-title">Donation</div>
+            <div class="product-price">$?</div>
+          </div>
+          <p class="product-desc">
+            Standard donation rate: 3 gobbies to 1 USD. Check our socials to see if we have a drive running!
+          </p>
+
+          <form class="product-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_donations">
+            <input type="hidden" name="business" value="nepagm@gmail.com">
+            <input type="hidden" name="item_name" value="Alliance NEPA Custom Donation">
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="no_shipping" value="1">
+            <input type="hidden" name="no_note" value="0">
+            <button class="pay-btn" type="submit">Pay</button>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared footer -->
+  <div id="footer-placeholder"></div>
+</body>
+</html>
