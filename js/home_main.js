@@ -181,8 +181,8 @@ initFaqAccordion();
    - If this page is at /new-player/index.html and header.html is at site root: use "/header.html"
    - If header.html is one level up: use "../header.html"
 */
-const HEADER_PATH = "/header.html";
-const FOOTER_PATH = "/footer.html";
+const HEADER_PATH = "../components/header.html";
+const FOOTER_PATH = "../components/footer.html";
 
 async function loadPartial(placeholderId, url) {
   const el = document.getElementById(placeholderId);
