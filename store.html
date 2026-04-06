@@ -191,9 +191,6 @@
 </head>
 
 <body class="store-page">
-
-    <!--Paypal SDK-->
-  <script src="https://www.paypal.com/sdk/js?client-id=ATgN55pNAkcItGbNAGrLwFmMofMdVsjqpabzgNQx5n9gLAm_NgDb_CJPcc1dss1OfjrUBJ2IPy2zzT0d&vault=true&intent=subscription"></script>
   <!-- Background particles -->
   <div class="particles" id="particles" aria-hidden="true"></div>
 
@@ -325,6 +322,9 @@
   <!-- Shared footer -->
   <div id="footer-placeholder"></div>
 
+  <!--Paypal SDK-->
+  <script src="https://www.paypal.com/sdk/js?client-id=AbDe38nL3m2EzcXAu1UhyQ3rfpwLVWSSO5ddnSna433F5kIx8UMLQgGd-eOg24B8uS64t888irHtj3p_&vault=true&intent=subscription&currency=USD"></script>
+
   <script>
   paypal.Buttons({
     style: {
@@ -346,6 +346,7 @@
 
   }).render('#paypal-subscription-button');
 </script>
+
 
 </body>
 </html>
