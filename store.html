@@ -191,6 +191,9 @@
 </head>
 
 <body class="store-page">
+
+    <!--Paypal SDK-->
+  <script src="https://www.paypal.com/sdk/js?client-id=ATgN55pNAkcItGbNAGrLwFmMofMdVsjqpabzgNQx5n9gLAm_NgDb_CJPcc1dss1OfjrUBJ2IPy2zzT0d&vault=true&intent=subscription"></script>
   <!-- Background particles -->
   <div class="particles" id="particles" aria-hidden="true"></div>
 
@@ -256,6 +259,23 @@
           </form>
         </article>
 
+        <!-- ===== Season Pass (Monthly) ===== -->
+        <article class="product">
+          <div class="product-header">
+            <div class="product-title">Season Pass (Monthly)</div>
+            <div class="product-price">$40/mo</div>
+          </div>
+
+          <p class="product-desc">
+            Pay over time for all 3 events. $40/month for 6 months ($240 total).
+          </p>
+
+          <div class="product-form">
+            <!-- This div becomes your PayPal button -->
+            <div id="paypal-subscription-button"></div>
+          </div>
+        </article>
+
         <!-- ===== Mug $15 (no shipping collected) ===== -->
         <article class="product">
           <div class="product-header">
@@ -304,5 +324,28 @@
 
   <!-- Shared footer -->
   <div id="footer-placeholder"></div>
+
+  <script>
+  paypal.Buttons({
+    style: {
+      layout: 'horizontal',
+      color: 'gold',
+      shape: 'rect',
+      height: 40
+    },
+
+    createSubscription: function(data, actions) {
+      return actions.subscription.create({
+        plan_id: 'P-37N12497ML805180ENHJIRIY'
+      });
+    },
+
+    onApprove: function(data, actions) {
+      alert('Subscription started!');
+    }
+
+  }).render('#paypal-subscription-button');
+</script>
+
 </body>
 </html>
